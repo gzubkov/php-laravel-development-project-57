@@ -16,6 +16,14 @@ RUN apt-get install -y nodejs
 WORKDIR /app
 
 COPY . .
+
+ENV APP_ENV local
+ENV APP_DEBUG true
+ENV LOG_CHANNEL stderr
+
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
 RUN composer install
 RUN npm cache clean --force
 RUN npm ci
