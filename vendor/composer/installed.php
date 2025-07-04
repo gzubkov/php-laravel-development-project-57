@@ -3,7 +3,7 @@
         'name' => 'hexlet/code',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '2b03fa6efb1b79f53a917ef5d86ec214c769c054',
+        'reference' => '636ee48693ba3456fe1989413a1e053365174c92',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -169,7 +169,7 @@
         'hexlet/code' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '2b03fa6efb1b79f53a917ef5d86ec214c769c054',
+            'reference' => '636ee48693ba3456fe1989413a1e053365174c92',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -393,6 +393,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'laracasts/flash' => array(
+            'pretty_version' => '3.2.4',
+            'version' => '3.2.4.0',
+            'reference' => '0ea47bfbf12a33113247c367798a34e519020f8d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laracasts/flash',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'laravel/breeze' => array(
             'pretty_version' => 'v2.3.7',
