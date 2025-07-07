@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model
 {
@@ -17,6 +19,10 @@ class Task extends Model
         'assigned_to_id',
     ];
 
+    protected $dates = [
+        'created_at',
+    ];
+
     public function status(): BelongsTo
     {
         return $this->belongsTo(TaskStatus::class, 'status_id');
@@ -27,7 +33,7 @@ class Task extends Model
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
-    public function executor(): BelongsTo
+    public function contractor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to_id');
     }

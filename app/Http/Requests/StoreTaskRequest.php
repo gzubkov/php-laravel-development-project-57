@@ -22,15 +22,19 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|max:255',
+            'description' => 'nullable|string',
+            'status_id' => 'required|exists:task_statuses,id',
+            'assigned_to_id' => 'nullable|exists:users,id'
         ];
+        
     }
 
     public function messages(): array
     {
         return [
-            'title.required' => 'A title is required',
-            'body.required' => 'A message is required',
+            'name.required' => __('app.validation.required', ['field' => __('app.fields.name')]),
+            'status_id.required' => __('app.validation.required', ['field' => __('app.task_status')]),
         ];
     }
 }

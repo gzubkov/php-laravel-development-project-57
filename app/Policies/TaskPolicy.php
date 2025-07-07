@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class TaskPolicy
 {
@@ -13,7 +14,7 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +22,7 @@ class TaskPolicy
      */
     public function view(User $user, Task $task): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,15 +30,15 @@ class TaskPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Task $task): bool
+    public function update(User $user): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -45,7 +46,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        return false;
+        return $task->creator()->is($user);
     }
 
     /**

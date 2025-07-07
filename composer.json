@@ -17,6 +17,7 @@
         "railsware/mailtrap-php": "^3.3",
         "sentry/sentry-laravel": "^4.15",
         "spatie/laravel-html": "^3.12",
+        "spatie/laravel-query-builder": "^6.3",
         "symfony/http-client": "^7.3"
     },
     "require-dev": {
