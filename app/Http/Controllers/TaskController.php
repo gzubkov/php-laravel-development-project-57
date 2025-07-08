@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     use AuthorizesRequests;
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +29,7 @@ class TaskController extends Controller
         $taskModel = new Task();
         $taskStatuses = TaskStatus::pluck('name', 'id')->all();
         $users = User::pluck('name', 'id')->all();
-        
+
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 AllowedFilter::exact('status_id')->ignore(null),
@@ -37,7 +37,7 @@ class TaskController extends Controller
                 AllowedFilter::exact('assigned_to_id')->ignore(null),
             ])
             ->allowedSorts(['id', 'name', 'status_id', 'created_by_id', 'assigned_to_id'])
-            ->with(['status', 'creator', 'contractor']) 
+            ->with(['status', 'creator', 'contractor'])
             ->defaultSort('id')
             ->paginate(15);
 
@@ -69,13 +69,13 @@ class TaskController extends Controller
         $this->authorize('create', Task::class);
 
         $data = $request->validated();
-        
+
         $task = new Task($data);
         $task->created_by_id = Auth::id();
         $task->save();
 
         if (
-            array_key_exists('labels', $data) 
+            array_key_exists('labels', $data)
             && count($data['labels']) > 0
         ) {
             $task->labels()->sync($data['labels']);
@@ -120,7 +120,7 @@ class TaskController extends Controller
         $this->authorize('update', Task::class);
 
         $data = $request->validated();
-        
+
         $task->fill($data);
         $task->save();
 
@@ -138,10 +138,10 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $this->authorize('delete', $task);
-        
+
         $task->delete();
         flash(__('app.messages.task.delete_success'))->success();
-        
+
         return redirect()
             ->route('tasks.index');
     }

@@ -16,7 +16,6 @@ class StoreTaskRequest extends FormRequest
         $task = $this->route('task') ?? new Task();
         return Auth::check() && $this->user()->can('create', $task);
     }
-    
 
     /**
      * Get the validation rules that apply to the request.
@@ -32,7 +31,6 @@ class StoreTaskRequest extends FormRequest
             'assigned_to_id' => 'nullable|exists:users,id',
             'labels' => 'nullable',
         ];
-        
     }
 
     public function messages(): array

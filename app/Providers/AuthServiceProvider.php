@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         Label::class => LabelPolicy::class,
         Task::class => TaskPolicy::class,
     ];
-    
+
     /**
      * Register services.
      */

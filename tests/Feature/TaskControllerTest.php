@@ -51,7 +51,7 @@ class TaskControllerTest extends TestCase
         $response->assertViewIs('task.create');
         $response->assertViewHas('task', fn($task) => $task instanceof Task);
     }
-    
+
     public function testStoreFailsForUnauthenticatedUser()
     {
         $response = $this->post(route('tasks.store'), ['name' => 'Test Task']);
@@ -75,7 +75,7 @@ class TaskControllerTest extends TestCase
         $response = $this->post(route('tasks.store'), $data);
 
         $response->assertRedirect(route('tasks.index'));
-        
+
         $message = session('flash_notification')[0];
 
         $this->assertEquals(__('app.messages.task.create_success'), $message->message);
@@ -122,7 +122,7 @@ class TaskControllerTest extends TestCase
     {
         $this->actingAs($this->user);
         $task = Task::factory()->create();
-        
+
         $data = [
             'name' => 'Updated Task',
             'status_id' => TaskStatus::factory()->create()->getKey(),
@@ -133,7 +133,7 @@ class TaskControllerTest extends TestCase
         $response = $this->put(route('tasks.update', $task), $data);
 
         $response->assertRedirect(route('tasks.index'));
-        
+
         $message = session('flash_notification')[0];
 
         $this->assertEquals(__('app.messages.task.update_success'), $message->message);
@@ -193,5 +193,5 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('tasks', ['id' => $task->getKey()]);
-    } 
+    }
 }

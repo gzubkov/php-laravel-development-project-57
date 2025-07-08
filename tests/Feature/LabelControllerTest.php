@@ -57,12 +57,12 @@ class LabelControllerTest extends TestCase
         $this->actingAs($this->user);
 
         $data = [
-            'name' => 'Label', 
+            'name' => 'Label',
             'description' => 'Description'
         ];
 
         $this->mock(
-            LabelStoreRequest::class, 
+            LabelStoreRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 
@@ -74,7 +74,7 @@ class LabelControllerTest extends TestCase
 
         $this->assertEquals(__('app.messages.label.create_success'), $message->message);
         $this->assertEquals('success', $message->level);
-        
+
         $this->assertDatabaseHas('labels', ['name' => 'Label']);
     }
 
@@ -85,20 +85,11 @@ class LabelControllerTest extends TestCase
         $response->assertStatus(403);
         $this->assertDatabaseMissing('labels', ['name' => 'Label']);
     }
-/*
-    public function testShowNotDefined()
-    {
-        $label = Label::factory()->create();
 
-        $response = $this->get(route('labels.show', $label));
-        
-        $this->assertException(RouteNotFoundException::class);
-    }
-*/
     public function testCreateAndStoreLabel(): void
     {
         $this->actingAs($this->user);
-        
+
         $response = $this->get(route('labels.create'));
         $response->assertStatus(200);
 
@@ -163,7 +154,7 @@ class LabelControllerTest extends TestCase
         $data = ['name' => 'Updated Label', 'description' => 'Updated Description'];
 
         $this->mock(
-            LabelUpdateRequest::class, 
+            LabelUpdateRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 
@@ -175,7 +166,7 @@ class LabelControllerTest extends TestCase
 
         $this->assertEquals(__('app.messages.label.update_success'), $message->message);
         $this->assertEquals('success', $message->level);
-        
+
         $this->assertDatabaseHas('labels', ['id' => $label->getKey(), 'name' => 'Updated Label']);
     }
 
@@ -198,12 +189,12 @@ class LabelControllerTest extends TestCase
         $response = $this->delete(route('labels.destroy', $label));
 
         $response->assertRedirect(route('labels.index'));
-        
+
         $message = session('flash_notification')[0];
 
         $this->assertEquals(__('app.messages.label.delete_success'), $message->message);
         $this->assertEquals('success', $message->level);
-        
+
         $this->assertDatabaseMissing('labels', ['id' => $label->getKey()]);
     }
 
@@ -211,19 +202,19 @@ class LabelControllerTest extends TestCase
     {
         $this->actingAs($this->user);
         $label = Label::factory()->create();
-        
+
         $task = Task::factory()->create();
         $task->labels()->attach($label->getKey());
 
         $response = $this->delete(route('labels.destroy', $label));
 
         $response->assertRedirect(route('labels.index'));
-        
+
         $message = session('flash_notification')[0];
 
         $this->assertEquals(__('app.messages.label.delete_failed'), $message->message);
         $this->assertEquals('danger', $message->level);
-        
+
         $this->assertDatabaseHas('labels', ['id' => $label->getKey()]);
     }
 }

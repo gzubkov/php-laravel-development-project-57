@@ -13,7 +13,6 @@ class TaskStatusController extends Controller
 {
     use AuthorizesRequests;
 
-    
     /*
     public function __construct() {
         $this->authorizeResource(TaskStatus::class, 'taskStatus');
@@ -65,7 +64,7 @@ class TaskStatusController extends Controller
     public function edit(TaskStatus $taskStatus)
     {
         $this->authorize('update', $taskStatus);
-        
+
         return view('task_status.edit', compact('taskStatus'));
     }
 
@@ -75,7 +74,7 @@ class TaskStatusController extends Controller
     public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
         $this->authorize('update', $taskStatus);
-        
+
         $data = $request->validated();
         $taskStatus->name = $data['name'];
         $taskStatus->save();
@@ -92,7 +91,7 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         $this->authorize('delete', $taskStatus);
-        
+
         $tasksCount = $taskStatus->tasks()->getQuery()->count();
 
         if ($tasksCount > 0) {

@@ -61,7 +61,7 @@ class TaskStatusControllerTest extends TestCase
         ];
 
         $this->mock(
-            TaskStatusRequest::class, 
+            TaskStatusRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 
@@ -73,7 +73,7 @@ class TaskStatusControllerTest extends TestCase
 
         $this->assertEquals(__('app.messages.task_status.create_success'), $message->message);
         $this->assertEquals('success', $message->level);
-        
+
         $this->assertDatabaseHas('task_statuses', ['name' => 'TaskStatus']);
     }
 
@@ -98,7 +98,7 @@ class TaskStatusControllerTest extends TestCase
     public function testCreateAndStoreTaskStatus(): void
     {
         $this->actingAs($this->user);
-        
+
         $response = $this->get(route('task_statuses.create'));
         $response->assertStatus(200);
 
@@ -165,7 +165,7 @@ class TaskStatusControllerTest extends TestCase
         ];
 
         $this->mock(
-            TaskStatusUpdateRequest::class, 
+            TaskStatusUpdateRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 
@@ -177,7 +177,7 @@ class TaskStatusControllerTest extends TestCase
 
         $this->assertEquals(__('app.messages.task_status.update_success'), $message->message);
         $this->assertEquals('success', $message->level);
-        
+
         $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->getKey(), 'name' => 'Updated TaskStatus']);
     }
 
@@ -200,31 +200,31 @@ class TaskStatusControllerTest extends TestCase
         $response = $this->delete(route('task_statuses.destroy', $taskStatus));
 
         $response->assertRedirect(route('task_statuses.index'));
-        
+
         $message = session('flash_notification')[0];
 
         $this->assertEquals(__('app.messages.task_status.delete_success'), $message->message);
         $this->assertEquals('success', $message->level);
-        
+
         $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->getKey()]);
     }
 
     public function testDestroyFailsForTaskStatusWithTasks()
     {
         $this->actingAs($this->user);
-        
+
         $taskStatus = TaskStatus::factory()->create();
         Task::factory()->create(['status_id' => $taskStatus->getKey()]);
 
         $response = $this->delete(route('task_statuses.destroy', $taskStatus));
 
         $response->assertRedirect(route('task_statuses.index'));
-        
+
         $message = session('flash_notification')[0];
 
         $this->assertEquals(__('app.messages.task_status.delete_failed'), $message->message);
         $this->assertEquals('danger', $message->level);
-        
+
         $this->assertDatabaseHas('task_statuses', ['id' => $taskStatus->getKey()]);
     }
 }

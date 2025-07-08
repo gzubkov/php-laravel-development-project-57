@@ -13,7 +13,6 @@ setup:
 	php artisan db:seed
 	npm ci
 	npm run build
-	make ide-helper
 
 watch:
 	npm run watch
@@ -33,15 +32,21 @@ test:
 test-coverage:
 	XDEBUG_MODE=coverage php artisan test --coverage-clover build/logs/clover.xml
 
-deploy:
-	git push heroku
+seed:
+	php artisan db:seed
+
+build:
+	npm run build
 
 lint:
-	composer phpcs
+	composer exec --verbose phpcs -- --standard=phpcs.xml
 
 lint-fix:
-	composer phpcbf
+	composer exec --verbose phpcbf -- --standard=phpcs.xml
 
+reset:
+	php artisan migrate:fresh --seed
+	
 compose:
 	docker-compose up
 

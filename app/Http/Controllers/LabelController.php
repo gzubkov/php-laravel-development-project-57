@@ -12,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 class LabelController extends Controller
 {
     use AuthorizesRequests;
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -58,7 +58,7 @@ class LabelController extends Controller
     public function edit(Label $label)
     {
         $this->authorize('update', $label);
-        
+
         return view('label.edit', compact('label'));
     }
 

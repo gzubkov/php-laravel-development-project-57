@@ -3,7 +3,7 @@
         'name' => 'hexlet/code',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '48e59d626e628bce70d455db4a355bbf9ad943d7',
+        'reference' => 'eaff9fea4a9d870743ceb2512a931895bc749521',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -178,7 +178,7 @@
         'hexlet/code' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '48e59d626e628bce70d455db4a355bbf9ad943d7',
+            'reference' => 'eaff9fea4a9d870743ceb2512a931895bc749521',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -732,6 +732,15 @@
             'install_path' => __DIR__ . '/../phpoption/phpoption',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'phpstan/phpstan' => array(
+            'pretty_version' => '2.1.17',
+            'version' => '2.1.17.0',
+            'reference' => '89b5ef665716fa2a52ecd2633f21007a6a349053',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpstan/phpstan',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'phpunit/php-code-coverage' => array(
             'pretty_version' => '11.0.10',

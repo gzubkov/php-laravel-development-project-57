@@ -23,23 +23,23 @@ class IndexTaskRequest extends FormRequest
     {
         return [
             'filter.status_id' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'exists:task_statuses,id'
             ],
             'filter.created_by_id' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'exists:users,id'
             ],
             'filter.assigned_to_id' => [
-                'nullable', 
-                'integer', 
+                'nullable',
+                'integer',
                 'exists:users,id'
             ],
             'sort' => [
-                'nullable', 
-                'string', 
+                'nullable',
+                'string',
                 'in:id,name,status_id,created_by_id,assigned_to_id'
             ],
         ];
