@@ -18,7 +18,7 @@ return [
     'Password' => 'Пароль',
     'Confirm Password' => 'Подтверждение',
     'Already registered?' => 'Уже зарегистрированы?',
-    'Register' => 'Зарегистрироваться',
+    'Register' => 'Зарегистрировать',
     'Remember me' => 'Запомнить меня',
     'Forgot your password?' => 'Забыли пароль?',
     'Log in' => 'Войти',
