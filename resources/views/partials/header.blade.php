@@ -31,7 +31,7 @@
                             ->class("block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0") }}
                     </li>
                     <li>
-                        {{ html()->a(route('task_statuses.index'), __('app.labels'))
+                        {{ html()->a(route('labels.index'), __('app.labels'))
                             ->class("block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0") }}
                     </li>
                 </ul>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTaskStatusRequest;
+use App\Http\Requests\TaskStatusRequest;
 use App\Models\TaskStatus;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Session;
@@ -45,7 +45,7 @@ class TaskStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskStatusRequest $request)
+    public function store(TaskStatusRequest $request)
     {
         $this->authorize('create', TaskStatus::class);
 
@@ -53,9 +53,8 @@ class TaskStatusController extends Controller
         $taskStatus = new TaskStatus($data);
         $taskStatus->save();
 
-        flash(__('app.messages.create_success', ['module' => __('app.task_status')]))->success();
+        flash(__('app.messages.task_status.create_success'))->success();
 
-        // Редирект на указанный маршрут
         return redirect()
             ->route('task_statuses.index');
     }
@@ -73,7 +72,7 @@ class TaskStatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreTaskStatusRequest $request, TaskStatus $taskStatus)
+    public function update(TaskStatusRequest $request, TaskStatus $taskStatus)
     {
         $this->authorize('update', $taskStatus);
         
@@ -81,7 +80,7 @@ class TaskStatusController extends Controller
         $taskStatus->name = $data['name'];
         $taskStatus->save();
 
-        flash(__('app.messages.update_success', ['module' => __('app.task_status')]))->success();
+        flash(__('app.messages.task_status.update_success'))->success();
 
         return redirect()
             ->route('task_statuses.index');
@@ -95,11 +94,12 @@ class TaskStatusController extends Controller
         $this->authorize('delete', $taskStatus);
         
         $tasksCount = $taskStatus->tasks()->getQuery()->count();
+
         if ($tasksCount > 0) {
-            flash(__('app.messages.delete_error', ['module' => __('app.task_status')]))->success();
+            flash(__('app.messages.task_status.delete_failed'))->error();
         } else {
             $taskStatus->delete();
-            flash(__('app.messages.delete_success', ['module' => __('app.task_status')]))->success();
+            flash(__('app.messages.task_status.delete_success'))->success();
         }
 
         return redirect()

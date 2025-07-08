@@ -29,7 +29,7 @@
                 @can('create', $taskModel)
                     <div class="ml-auto">
                         <a href="{{ route('tasks.create') }}" class="blue-button ml-2">
-                            {{ __('app.actions.create_task') }}
+                            {{ __('app.actions.task.create') }}
                         </a>                    
                     </div>
                 @endcan

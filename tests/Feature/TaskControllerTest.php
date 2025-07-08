@@ -2,15 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Http\Requests\TaskStoreRequest;
-use App\Http\Requests\TaskUpdateRequest;
+use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class TaskTest extends TestCase
+class TaskControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -52,6 +51,14 @@ class TaskTest extends TestCase
         $response->assertViewIs('task.create');
         $response->assertViewHas('task', fn($task) => $task instanceof Task);
     }
+    
+    public function testStoreFailsForUnauthenticatedUser()
+    {
+        $response = $this->post(route('tasks.store'), ['name' => 'Test Task']);
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing('tasks', ['name' => 'Test Task']);
+    }
 
     public function testStoreForAuthenticatedUser()
     {
@@ -68,17 +75,13 @@ class TaskTest extends TestCase
         $response = $this->post(route('tasks.store'), $data);
 
         $response->assertRedirect(route('tasks.index'));
-        $response->assertSessionHas('flash_message', __('app.messages.create_success', ['module' => __('app.task')]));
+        
+        $message = session('flash_notification')[0];
+
+        $this->assertEquals(__('app.messages.task.create_success'), $message->message);
+        $this->assertEquals('success', $message->level);
 
         $this->assertDatabaseHas('tasks', $data);
-    }
-
-    public function testStoreFailsForUnauthenticatedUser()
-    {
-        $response = $this->post(route('tasks.store'), ['name' => 'Test Task']);
-
-        $response->assertStatus(403);
-        $this->assertDatabaseMissing('tasks', ['name' => 'Test Task']);
     }
 
     public function testShowDisplaysTask()
@@ -119,14 +122,23 @@ class TaskTest extends TestCase
     {
         $this->actingAs($this->user);
         $task = Task::factory()->create();
-        $data = ['name' => 'Updated Task'];
+        
+        $data = [
+            'name' => 'Updated Task',
+            'status_id' => TaskStatus::factory()->create()->getKey(),
+        ];
 
         $this->mock(TaskUpdateRequest::class, fn($mock) => $mock->shouldReceive('validated')->andReturn($data));
 
         $response = $this->put(route('tasks.update', $task), $data);
 
         $response->assertRedirect(route('tasks.index'));
-        $response->assertSessionHas('flash_message', __('app.messages.update_success', ['module' => __('app.task')]));
+        
+        $message = session('flash_notification')[0];
+
+        $this->assertEquals(__('app.messages.task.update_success'), $message->message);
+        $this->assertEquals('success', $message->level);
+
         $this->assertDatabaseHas('tasks', ['id' => $task->getKey(), 'name' => 'Updated Task']);
     }
 
@@ -151,8 +163,13 @@ class TaskTest extends TestCase
 
         $response = $this->delete(route('tasks.destroy', $task));
 
-        $response->assertRedirect(route('tasks.index'))
-            ->assertSessionHas('flash_message', __('app.flash.task.deleted'));
+        $response->assertRedirect(route('tasks.index'));
+
+        $message = session('flash_notification')[0];
+
+        $this->assertEquals(__('app.messages.task.delete_success'), $message->message);
+        $this->assertEquals('success', $message->level);
+
         $this->assertDatabaseMissing('tasks', ['id' => $task->getKey()]);
     }
 
@@ -176,5 +193,5 @@ class TaskTest extends TestCase
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('tasks', ['id' => $task->getKey()]);
-    }
+    } 
 }

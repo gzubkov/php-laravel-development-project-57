@@ -3,20 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Task;
 
-class StoreTaskRequest extends FormRequest
+class TaskStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        $task = $this->route('task') ?? new Task();
-        return Auth::check() && $this->user()->can('create', $task);
+        return true;
     }
-    
 
     /**
      * Get the validation rules that apply to the request.
@@ -25,21 +21,19 @@ class StoreTaskRequest extends FormRequest
      */
     public function rules(): array
     {
+        $status = $this->route('task_statuses');
+        $statusId = $status && is_object($status) && property_exists($status, 'id') ? ',' . $status->id : '';
+
         return [
-            'name' => 'required|max:255',
-            'description' => 'nullable|string',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-            'labels' => 'nullable',
+            'name' => 'required|max:255|unique:task_statuses,name' . $statusId,
         ];
-        
     }
 
     public function messages(): array
     {
         return [
             'name.required' => __('app.validation.required', ['field' => __('app.fields.name')]),
-            'status_id.required' => __('app.validation.required', ['field' => __('app.task_status')]),
+            'name.unique' => __('app.validation.unique', ['field' => __('app.fields.name')]),
         ];
     }
 }

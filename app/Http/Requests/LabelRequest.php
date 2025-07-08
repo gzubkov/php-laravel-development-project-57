@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTaskStatusRequest extends FormRequest
+class LabelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,15 +21,12 @@ class StoreTaskStatusRequest extends FormRequest
      */
     public function rules(): array
     {
-        $status = $this->route('task_statuses');
-        $statusId = $status && is_object($status) && property_exists($status, 'id') ? ',' . $status->id : '';
+        $label = $this->route('label');
+        $labelId = $label && is_object($label) && array_key_exists('id', $label->getAttributes()) ? ',' . $label->id : '';
 
         return [
-            'name' => 'required|max:255|unique:task_statuses,name' . $statusId,
-        ];
-        
-        return [
-            'name' => 'required|max:255|unique:task_statuses,name,{$this->id}',
+            'name' => 'required|max:255|unique:labels,name' . $labelId,
+            'description' => 'nullable',
         ];
     }
 

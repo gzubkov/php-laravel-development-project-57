@@ -10,13 +10,28 @@ return [
     'task_status' => 'статус',
     'Task_status' => 'Статус',
     'task' => 'задача',
+    'label' => 'метка',
     
     'messages' => [
-        'create_success' => ':Module успешно создан',
-        'update_success' => ':Module успешно обновлен',
-        'delete_success' => ':Module успешно удален',
-        'delete_error' => 'Не удалось удалить :module',
-        
+        'task_status' => [
+            'create_success' => 'Статус успешно создан',
+            'update_success' => 'Статус успешно изменён',
+            'delete_success' => 'Статус успешно удалён',
+            'delete_failed' => 'Не удалось удалить статус',
+        ],
+
+        'task' => [
+            'create_success' => 'Задача успешно создана',
+            'update_success' => 'Задача успешно изменена',
+            'delete_success' => 'Задача успешно удалена',
+        ],
+            
+        'label'  => [
+            'create_success' => 'Метка успешно создана',
+            'update_success' => 'Метка успешно изменена',
+            'delete_success' => 'Метка успешно удалена',
+            'delete_failed' => 'Не удалось удалить метку',
+        ],
     ],
 
     'auth' => [
@@ -25,11 +40,10 @@ return [
         'register' => 'Регистрация',
     ],
 
-    'verification' => [
+    'validation' => [
         'required' => 'Поле ":field" обязательно для заполнения',
         'unique' => 'Поле ":field" должно быть уникальным',
     ],
-
 
     'actions' => [
         'actions' => 'Действия',
@@ -42,11 +56,21 @@ return [
 
         'confirm' => 'Вы уверены?',
 
+        'task_status' => [
+            'create' => 'Создать статус',
+            'edit' => 'Изменение статуса',
+        ],
 
-        'edit_task_status' => 'Изменение статуса',
+        'task' => [
+            'create' => 'Создать задачу',
+            'edit' => 'Изменение задачи',
+            'show' => 'Просмотр задачи',
+        ],
 
-        'create_task' => 'Создать задачу',
-        'view_task' => 'Просмотр задачи',
+        'label' => [
+            'create' => 'Создать метку',
+            'edit' => 'Изменение метки',
+        ],
     ],
 
     'fields' => [
@@ -55,7 +79,6 @@ return [
         'author' => 'Автор',
         'contractor' => 'Исполнитель',
         'description' => 'Описание',
-
     ],
 
     'hexlet' => [
