@@ -11,7 +11,7 @@ return [
     'Task_status' => 'Статус',
     'task' => 'задача',
     'label' => 'метка',
-    
+
     'messages' => [
         'task_status' => [
             'create_success' => 'Статус успешно создан',
@@ -25,7 +25,7 @@ return [
             'update_success' => 'Задача успешно изменена',
             'delete_success' => 'Задача успешно удалена',
         ],
-            
+
         'label'  => [
             'create_success' => 'Метка успешно создана',
             'update_success' => 'Метка успешно изменена',
