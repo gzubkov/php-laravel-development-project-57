@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\TaskRequest;
 use App\Http\Requests\IndexTaskRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
@@ -38,7 +38,7 @@ class TaskController extends Controller
             ])
             ->allowedSorts(['id', 'name', 'status_id', 'created_by_id', 'assigned_to_id'])
             ->with(['status', 'creator', 'contractor'])
-            ->defaultSort('id')
+            ->orderBy('id', 'asc')
             ->paginate(15);
 
         $filter = $request->filter ?? [];
@@ -64,7 +64,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskRequest $request)
+    public function store(TaskRequest $request)
     {
         $this->authorize('create', Task::class);
 
@@ -107,7 +107,8 @@ class TaskController extends Controller
         $taskStatuses = TaskStatus::getStatuses();
         $users = User::pluck('name', 'id')->all();
         $labels = Label::getLabels();
-        $selectedLabels = $task->labels?->pluck('id')->toArray();
+
+        $selectedLabels = $task->labels->pluck('id')->toArray();
 
         return view('task.edit', compact('task', 'users', 'taskStatuses', 'labels', 'selectedLabels'));
     }
@@ -115,7 +116,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreTaskRequest $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
         $this->authorize('update', Task::class);
 

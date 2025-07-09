@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Task;
+use App\Http\Requests\TaskStatusRequest;
 
 class TaskStatusControllerTest extends TestCase
 {
@@ -165,7 +166,7 @@ class TaskStatusControllerTest extends TestCase
         ];
 
         $this->mock(
-            TaskStatusUpdateRequest::class,
+            TaskStatusRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Task;
+use App\Http\Requests\LabelRequest;
 
 class LabelControllerTest extends TestCase
 {
@@ -62,7 +63,7 @@ class LabelControllerTest extends TestCase
         ];
 
         $this->mock(
-            LabelStoreRequest::class,
+            LabelRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 
@@ -154,7 +155,7 @@ class LabelControllerTest extends TestCase
         $data = ['name' => 'Updated Label', 'description' => 'Updated Description'];
 
         $this->mock(
-            LabelUpdateRequest::class,
+            LabelRequest::class,
             fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
         );
 

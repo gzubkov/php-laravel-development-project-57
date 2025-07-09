@@ -2,12 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Http\Requests\TaskRequest;
 
 class TaskControllerTest extends TestCase
 {
@@ -70,7 +70,10 @@ class TaskControllerTest extends TestCase
             'status_id' => TaskStatus::factory()->create()->getKey(),
         ];
 
-        $this->mock(TaskStoreRequest::class, fn($mock) => $mock->shouldReceive('validated')->andReturn($data));
+        $this->mock(
+            TaskRequest::class,
+            fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
+        );
 
         $response = $this->post(route('tasks.store'), $data);
 
@@ -128,7 +131,10 @@ class TaskControllerTest extends TestCase
             'status_id' => TaskStatus::factory()->create()->getKey(),
         ];
 
-        $this->mock(TaskUpdateRequest::class, fn($mock) => $mock->shouldReceive('validated')->andReturn($data));
+        $this->mock(
+            TaskRequest::class,
+            fn($mock) => $mock->shouldReceive('validated')->andReturn($data)
+        );
 
         $response = $this->put(route('tasks.update', $task), $data);
 
