@@ -36,7 +36,7 @@ return [
 
     'auth' => [
         'login' => 'Вход',
-        'logout' => 'Выйти',
+        'logout' => 'Выход',
         'register' => 'Регистрация',
     ],
 
