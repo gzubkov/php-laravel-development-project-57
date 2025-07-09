@@ -34,7 +34,7 @@ class LabelRequest extends FormRequest
     {
         return [
             'name.required' => __('app.validation.required', ['field' => __('app.fields.name')]),
-            'name.unique' => __('app.validation.unique', ['field' => __('app.fields.name')]),
+            'name.unique' => __('app.validation.uniquemodule', ['module' => __('app.label')]),
         ];
     }
 }
